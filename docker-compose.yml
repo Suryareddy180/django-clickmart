@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: clickmart-db
+    env_file:
+      - ./backend-drf/.env.production
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend-drf
+    image: clickmart-backend
+    container_name: clickmart-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend-drf/.env.docker
+    depends_on:
+      - db
+    volumes:
+      - ./backend-drf/static:/app/static
+      - ./backend-drf/media:/app/media
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_SERVER_BASE_URL: "http://172.232.102.38:8000/api/v1"
+    image: clickmart-frontend
+    container_name: clickmart-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
