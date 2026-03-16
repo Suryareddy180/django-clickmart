@@ -29,7 +29,7 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_SERVER_BASE_URL: "http://172.232.102.38:8000/api/v1"
+        VITE_SERVER_BASE_URL: "http://170.187.250.28:8000/api/v1"
     image: clickmart-frontend
     container_name: clickmart-frontend
     ports:
