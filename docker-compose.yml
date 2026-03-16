@@ -11,8 +11,6 @@ services:
     build: ./backend-drf
     image: clickmart-backend
     container_name: clickmart-backend
-    ports:
-      - "8000:8000"
     env_file:
       - ./backend-drf/.env.docker
     depends_on:
@@ -29,12 +27,20 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_SERVER_BASE_URL: "http://170.187.250.28:8000/api/v1"
+        VITE_SERVER_BASE_URL: "/api/v1"
     image: clickmart-frontend
     container_name: clickmart-frontend
-    ports:
-      - "5173:80"
     depends_on:
+      - backend
+  
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
       - backend
 
 volumes:
