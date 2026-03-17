@@ -174,5 +174,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    'http://170.187.250.28:5173'
+    'http://170.187.250.28:5173',
+    'http://clickmart24.shop',
+    'https://clickmart24.shop',
 ]
