@@ -178,3 +178,5 @@ CORS_ALLOWED_ORIGINS = [
     'http://clickmart24.shop',
     'https://clickmart24.shop',
 ]
+
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(",")
